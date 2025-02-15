@@ -29,7 +29,8 @@ Basic RAG is the standard, straightforward implementation of **Retrieval-Augment
 #      langchain-community==0.2.10 \
 #      langchain-huggingface==0.0.3 \
 #      einops==0.8.0 \
-#      faiss_cpu==1.8.0.post1
+#      faiss_cpu==1.8.0.post1 \
+#      pypdf
 
 """# Import related libraries related to Langchain, HuggingfaceEmbedding"""
 
@@ -88,16 +89,20 @@ def pretty_print_docs(docs):
 
 # Import necessary libraries
 #from langchain_community.document_loaders import WebBaseLoader
-from langchain_community.document_loaders import TextLoader
+from langchain_community.document_loaders import TextLoader  # for txt files
+from langchain_community.documnet_loaders import PypdfLoader  # for pdf files
 from langchain_community.vectorstores import FAISS
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 # Load documents from a web URL
 #documents = WebBaseLoader("https://github.com/hwchase17/chroma-langchain/blob/master/state_of_the_union.txt").load()
 # load from local storage
+# for txt file
 file_path = r'D:\Projects_RAG_Types\state_of_the_union.txt'
-
 loader = TextLoader(file_path, encoding="utf-8")
+# for pdf file
+# file_path = r'D:\Projects_RAG_Types\100 NLP Questions by Steve Nouri.pdf'
+# loader = PypdfLoader(file_path)
 documents = loader.load()
 # Split documents into chunks of 500 characters with 100 characters overlap
 text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=100)
